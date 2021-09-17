@@ -1,4 +1,4 @@
-import { TextStyleExtended } from "./../dist/types.d";
+import { Point, Rectangle } from "@pixi/math";
 import {
   Align,
   createEmptyFinalToken,
@@ -6,22 +6,22 @@ import {
   ParagraphToken,
   StyledToken,
   StyledTokens,
+  TextStyleExtended,
   TextStyleSet,
 } from "./../src/types";
 import { splitText } from "./../src/layout";
-import * as PIXI from "pixi.js";
 import * as layout from "../src/layout";
 import { mapTagsToStyles } from "../src/style";
 import { parseTagsNew } from "../src/tags";
 import { SplitStyle } from "../src/types";
 
-const R = (...args: number[]) => new PIXI.Rectangle(...args);
+const R = (...args: number[]) => new Rectangle(...args);
 
 describe("layout module", () => {
   const maxLineWidth = 500;
 
   describe("updateOffsetForNewLine()", () => {
-    const offset = new PIXI.Point(35, 100);
+    const offset = new Point(35, 100);
     const result = layout.updateOffsetForNewLine(offset, 50, 20);
     it("should update the properties of the offset. x would always be zero in this case.", () => {
       expect(result).toHaveProperty("x", 0);
@@ -87,7 +87,7 @@ describe("layout module", () => {
 
   describe("translatePoint()", () => {
     const rect = R(10, 10, 20, 20);
-    const offset = new PIXI.Point(15, -5);
+    const offset = new Point(15, -5);
     const result = layout.translatePoint(offset)(rect);
     it("should move a point-like object by an amount.", () => {
       expect(result).toMatchObject({
@@ -103,7 +103,7 @@ describe("layout module", () => {
 
   describe("translateLine()", () => {
     const line = [R(1, 1, 10, 10), R(2, 2, 10, 10), R(3, 3, 10, 10)];
-    const offset = new PIXI.Point(10, 20);
+    const offset = new Point(10, 20);
     const result = layout.translateLine(offset)(line);
 
     it("should offset several points (all the Measurements in a line)", () => {
@@ -688,8 +688,8 @@ aa bb aa`;
         expect(normal.content).toBe("A");
         expect(normal.style.strokeThickness ?? 0).toBe(0);
         expect(normal.bounds.height).toBe(23);
-        expect(normal.fontProperties.ascent).toBe(18);
-        expect(normal.fontProperties.descent).toBe(5);
+        expect(normal.fontProperties.ascent).toBe(19);
+        expect(normal.fontProperties.descent).toBe(4);
         expect(normal.fontProperties.fontSize).toBe(23);
       });
 
@@ -697,8 +697,8 @@ aa bb aa`;
         expect(stroked.content).toBe("B");
         expect(stroked.style.strokeThickness).toBe(40);
         expect(stroked.bounds.height).toBe(63);
-        expect(stroked.fontProperties.ascent).toBe(38);
-        expect(stroked.fontProperties.descent).toBe(25);
+        expect(stroked.fontProperties.ascent).toBe(39);
+        expect(stroked.fontProperties.descent).toBe(24);
         expect(stroked.fontProperties.fontSize).toBe(63);
       });
 
@@ -706,8 +706,8 @@ aa bb aa`;
         expect(alsoStroked.content).toBe("C");
         expect(alsoStroked.style.strokeThickness).toBe(40);
         expect(alsoStroked.bounds.height).toBe(63);
-        expect(alsoStroked.fontProperties.ascent).toBe(38);
-        expect(alsoStroked.fontProperties.descent).toBe(25);
+        expect(alsoStroked.fontProperties.ascent).toBe(39);
+        expect(alsoStroked.fontProperties.descent).toBe(24);
         expect(alsoStroked.fontProperties.fontSize).toBe(63);
       });
     });

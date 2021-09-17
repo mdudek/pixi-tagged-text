@@ -1,37 +1,41 @@
-import { extractDecorations } from "./style";
-import { capitalize } from "./stringUtil";
+import { Container } from "@pixi/display";
+import { Point as PixiPoint, Rectangle } from "@pixi/math";
+import { Sprite } from "@pixi/sprite";
+import { Text as PixiText } from "@pixi/text";
 import {
-  last,
-  first,
   assoc,
-  mapProp,
+  first,
   flatReduce,
+  last,
+  mapProp,
   Unary,
 } from "./functionalUtils";
 import { getFontPropertiesOfText } from "./pixiUtils";
-import * as PIXI from "pixi.js";
+import { capitalize } from "./stringUtil";
+import { extractDecorations } from "./style";
 import {
   Align,
   Bounds,
-  Point,
-  StyledTokens,
-  FinalToken,
-  StyledToken,
-  TextToken,
-  SpriteToken,
-  SplitStyle,
-  TextStyleExtended,
-  isNewlineToken,
-  isWhitespaceToken,
-  IMG_DISPLAY_PROPERTY,
-  isSpriteToken,
-  ParagraphToken,
-  LineToken,
-  WordToken,
-  Nested,
-  isNotWhitespaceToken,
-  VAlign,
   createEmptyFinalToken,
+  FinalToken,
+  IFontMetrics,
+  IMG_DISPLAY_PROPERTY,
+  isNewlineToken,
+  isNotWhitespaceToken,
+  isSpriteToken,
+  isWhitespaceToken,
+  LineToken,
+  Nested,
+  ParagraphToken,
+  Point,
+  SplitStyle,
+  SpriteToken,
+  StyledToken,
+  StyledTokens,
+  TextStyleExtended,
+  TextToken,
+  VAlign,
+  WordToken,
 } from "./types";
 
 const ICON_SCALE_BASE = 0.8;
@@ -47,10 +51,10 @@ export const updateOffsetForNewLine = (
   offset: Point,
   largestLineHeight: number,
   lineSpacing: number
-): Point => new PIXI.Point(0, offset.y + largestLineHeight + lineSpacing);
+): Point => new PixiPoint(0, offset.y + largestLineHeight + lineSpacing);
 
 const rectFromContainer = (
-  container: PIXI.Container,
+  container: Container,
   offset: Point = { x: 0, y: 0 }
 ): Bounds => {
   const w = container.width;
@@ -58,7 +62,7 @@ const rectFromContainer = (
   const x = offset.x + container.x;
   const y = offset.y + container.y;
 
-  return new PIXI.Rectangle(x, y, w, h);
+  return new Rectangle(x, y, w, h);
 };
 
 /**
@@ -583,10 +587,10 @@ export const calculateFinalTokens = (
   splitStyle: SplitStyle = "words"
 ): ParagraphToken => {
   // Create a text field to use for measurements.
-  const sizer = new PIXI.Text("");
+  const sizer = new PixiText("");
   const defaultStyle = styledTokens.style;
 
-  let fontProperties: PIXI.IFontMetrics;
+  let fontProperties: IFontMetrics;
 
   const generateFinalTokenFromStyledToken =
     (style: TextStyleExtended, tags: string) =>
@@ -664,7 +668,7 @@ export const calculateFinalTokens = (
         });
 
         output = output.concat(textTokens);
-      } else if (token instanceof PIXI.Sprite) {
+      } else if (token instanceof Sprite) {
         const sprite = token;
         const imgDisplay = style[IMG_DISPLAY_PROPERTY];
         // const isBlockImage = imgDisplay === "block";
@@ -723,14 +727,13 @@ export const calculateFinalTokens = (
   );
 
   const { wordWrap: ww, wordWrapWidth: www } = defaultStyle;
-  const hasWordWrapWidth = www !== undefined && isNaN(www) === false && www > 0;
+  const hasWordWrapWidth =
+    www !== undefined && !isNaN(www as number) && (www as number) > 0;
   const maxWidth =
     ww && hasWordWrapWidth ? (www as number) : Number.POSITIVE_INFINITY;
 
   const lineSpacing = defaultStyle.lineSpacing ?? 0;
   const align = defaultStyle.align ?? "left";
 
-  const lines = layout(finalTokens, maxWidth, lineSpacing, align);
-
-  return lines;
+  return layout(finalTokens, maxWidth, lineSpacing, align);
 };

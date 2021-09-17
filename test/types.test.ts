@@ -1,4 +1,5 @@
-import * as PIXI from "pixi.js";
+import { Rectangle } from "@pixi/math";
+import { Sprite } from "@pixi/sprite";
 import {
   isEmptyObject,
   isSpriteToken,
@@ -14,7 +15,7 @@ import {
 describe("Type validation", () => {
   const textToken = {
     content: "Hello",
-    bounds: { ...new PIXI.Rectangle() },
+    bounds: { ...new Rectangle() },
     fontProperties: {
       ascent: 10,
       descent: 3,
@@ -25,8 +26,8 @@ describe("Type validation", () => {
     textDecorations: [],
   } as TextFinalToken;
   const spriteToken = {
-    content: new PIXI.Sprite(),
-    bounds: { ...new PIXI.Rectangle() },
+    content: new Sprite(),
+    bounds: { ...new Rectangle() },
     fontProperties: { ascent: 10, descent: 3, fontSize: 13 },
     style: {},
     tags: "img",

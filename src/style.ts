@@ -1,3 +1,4 @@
+import { Sprite } from "@pixi/sprite";
 import { combineRecords, isDefined, pluck } from "./functionalUtils";
 import {
   AttributesList,
@@ -19,9 +20,9 @@ import {
   TextDecorationMetrics,
   Thickness,
   Color,
+  IFontMetrics,
 } from "./types";
 import { cloneSprite } from "./pixiUtils";
-import * as PIXI from "pixi.js";
 
 export const DEFAULT_STYLE: TextStyleExtended = {
   align: "left",
@@ -179,7 +180,7 @@ export const mapTagsToStyles = (
           `An image tag with ${IMG_REFERENCE_PROPERTY}="${imgKey}" was encountered, but there was no matching sprite in the sprite map. Please include a valid Sprite in the imgMap property in the options in your TaggedText constructor.`
         );
       }
-      if (sprite instanceof PIXI.Sprite === false) {
+      if (sprite instanceof Sprite === false) {
         throw new Error(
           `The image reference you provided for "${imgKey}" is not a Sprite. The imgMap can only accept PIXI.Sprite instances.`
         );
@@ -241,7 +242,7 @@ export const convertDecorationToLineProps = (
 export const extractDecorations = (
   style: TextStyleExtended,
   textBounds: Bounds,
-  fontProperties: PIXI.IFontMetrics
+  fontProperties: IFontMetrics
 ): TextDecorationMetrics[] => {
   const { ascent, descent } = fontProperties;
   const baseline = ascent;

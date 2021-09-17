@@ -1,4 +1,9 @@
-import * as PIXI from "pixi.js";
+import { Texture } from "@pixi/core";
+import { DisplayObject } from "@pixi/display";
+import { Text } from "@pixi/text";
+import { Graphics } from "@pixi/graphics";
+import { Rectangle } from "@pixi/math";
+import { Sprite } from "@pixi/sprite";
 import { pluck } from "../src/functionalUtils";
 import TaggedText from "../src/TaggedText";
 import {
@@ -16,8 +21,8 @@ describe("TaggedText", () => {
   iconImage.src = ICON_SRC;
   iconImage.width = 128;
   iconImage.height = 128;
-  const iconTexture = PIXI.Texture.from(iconImage, { width: 128, height: 128 });
-  const icon = PIXI.Sprite.from(iconTexture);
+  const iconTexture = Texture.from(iconImage, { width: 128, height: 128 });
+  const icon = Sprite.from(iconTexture);
 
   const style: TextStyleSet = {
     default: {
@@ -28,8 +33,8 @@ describe("TaggedText", () => {
     i: { fontStyle: "italic" },
   };
 
-  const emptySpriteBounds = new PIXI.Rectangle(0, 0, 0, 0);
-  const containerSpriteBounds = new PIXI.Rectangle(0, 0, 1, 1);
+  const emptySpriteBounds = new Rectangle(0, 0, 0, 0);
+  const containerSpriteBounds = new Rectangle(0, 0, 1, 1);
 
   describe("mock image", () => {
     test("Image has loaded.", () => {
@@ -101,9 +106,7 @@ describe("TaggedText", () => {
 
         it("Draws all shapes into one graphics layer.", () => {
           expect(blank.debugContainer.children).toHaveLength(1);
-          expect(blank.debugContainer.getChildAt(0)).toBeInstanceOf(
-            PIXI.Graphics
-          );
+          expect(blank.debugContainer.getChildAt(0)).toBeInstanceOf(Graphics);
         });
 
         it("Should show debug information if you set debug to true.", () => {
@@ -199,7 +202,7 @@ describe("TaggedText", () => {
 
             const icon = texTest.tokensFlat[0];
             expect(icon.bounds.height).toBeGreaterThan(1);
-            expect(texTest.spriteTemplates.icon).toBeInstanceOf(PIXI.Sprite);
+            expect(texTest.spriteTemplates.icon).toBeInstanceOf(Sprite);
           });
           it("Should load images from an HTMLImage object", () => {
             const imgTest = new TaggedText(
@@ -210,7 +213,7 @@ describe("TaggedText", () => {
 
             const icon = imgTest.tokensFlat[0];
             expect(icon.bounds.height).toBeGreaterThan(1);
-            expect(imgTest.spriteTemplates.icon).toBeInstanceOf(PIXI.Sprite);
+            expect(imgTest.spriteTemplates.icon).toBeInstanceOf(Sprite);
           });
           it("Should load images from a URL", () => {
             const urlTest = new TaggedText(
@@ -222,7 +225,7 @@ describe("TaggedText", () => {
             );
 
             expect(urlTest.spriteTemplates).toHaveProperty("img");
-            expect(urlTest.spriteTemplates.img).toBeInstanceOf(PIXI.Sprite);
+            expect(urlTest.spriteTemplates.img).toBeInstanceOf(Sprite);
             const img = urlTest.tokensFlat[0];
             expect(img.bounds.height).toBeGreaterThanOrEqual(1);
             expect(img.bounds.width).toBeGreaterThanOrEqual(1);
@@ -511,7 +514,7 @@ describe("TaggedText", () => {
           img: { imgSrc: "valignImg", imgDisplay: "icon" as ImageDisplayMode },
         };
 
-        const valignImg = PIXI.Sprite.from(iconSrc);
+        const valignImg = Sprite.from(iconSrc);
 
         const valign = new TaggedText(valignText, valignStyle, {
           imgMap: { valignImg },
@@ -713,7 +716,7 @@ Line 4`);
       it("Should add the decorations as children to the text field.", () => {
         const { textFields } = t;
         expect(textFields[0].children).toHaveLength(1);
-        expect(textFields[0].getChildAt(0)).toBeInstanceOf(PIXI.Graphics);
+        expect(textFields[0].getChildAt(0)).toBeInstanceOf(Graphics);
       });
 
       it('Should throw an error if you try to use a color name like "red" for the underline.', () => {
@@ -845,42 +848,42 @@ Line 4`);
     it("Should have a child called textContainer that displays the text fields", () => {
       expect(t.textContainer).toBeDefined();
       expect(t.textContainer.children).toHaveLength(6);
-      expect(t.textContainer.getChildAt(0)).toBeInstanceOf(PIXI.Text);
+      expect(t.textContainer.getChildAt(0)).toBeInstanceOf(Text);
     });
     it("Should have a child called spriteContainer that displays the sprites", () => {
       expect(t.spriteContainer).toBeDefined();
       expect(t.spriteContainer.children).toHaveLength(1);
-      expect(t.spriteContainer.getChildAt(0)).toBeInstanceOf(PIXI.Sprite);
+      expect(t.spriteContainer.getChildAt(0)).toBeInstanceOf(Sprite);
     });
     it("Should have a child called debugContainer that displays the debug info", () => {
       expect(t.debugContainer).toBeDefined();
       expect(t.debugContainer.children.length).toBeGreaterThan(0);
-      expect(t.debugContainer.getChildAt(0)).toBeInstanceOf(PIXI.DisplayObject);
+      expect(t.debugContainer.getChildAt(0)).toBeInstanceOf(DisplayObject);
     });
     it("Should have a property textFields that is a list of text fields", () => {
       expect(t.textFields).toBeDefined();
       expect(t.textFields).toHaveLength(6);
-      expect(t.textFields[0]).toBeInstanceOf(PIXI.Text);
+      expect(t.textFields[0]).toBeInstanceOf(Text);
     });
     it("Text field should contain its own underline.", () => {
       expect(t.textFields[0].children).toHaveLength(1);
-      expect(t.textFields[0].getChildAt(0)).toBeInstanceOf(PIXI.Graphics);
+      expect(t.textFields[0].getChildAt(0)).toBeInstanceOf(Graphics);
     });
     it("should have a property decorations that is a list of text decorations (aka underlines)", () => {
       expect(t.decorations).toBeDefined();
       //   expect(t.decorations).toHaveLength(1);
-      //   expect(t.decorations[0]).toBeInstanceOf(PIXI.Graphics);
+      //   expect(t.decorations[0]).toBeInstanceOf(Graphics);
     });
     it("Should have a property sprites that is a list of sprites", () => {
       expect(t.sprites).toBeDefined();
       expect(t.sprites).toHaveLength(1);
-      expect(t.sprites[0]).toBeInstanceOf(PIXI.Sprite);
+      expect(t.sprites[0]).toBeInstanceOf(Sprite);
     });
     it("Should have a property spriteTemplates that is a map of sprites created from the sources in imgMap. Each one is cloned before being drawn.", () => {
       expect(t.spriteTemplates).toBeDefined();
       expect(t.spriteTemplates).toBeInstanceOf(Object);
       const sprites = Object.values(t.spriteTemplates);
-      expect(sprites[0]).toBeInstanceOf(PIXI.Sprite);
+      expect(sprites[0]).toBeInstanceOf(Sprite);
     });
     it("spriteTemplates are not the same as the objects in sprites or spriteContainer, the latter are clones of the spriteTemplates.", () => {
       expect(t.spriteTemplates[0]).not.toBe(t.sprites[0]);

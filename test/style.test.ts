@@ -1,4 +1,5 @@
-import * as PIXI from "pixi.js";
+import { Texture } from "@pixi/core";
+import { Sprite } from "@pixi/sprite";
 import {
   TagTokens,
   TextStyleSet,
@@ -13,8 +14,8 @@ import iconSrc from "./icon.base64";
 describe("style module", () => {
   const iconImage = new Image();
   iconImage.src = `data:image/png;base64,${iconSrc}`;
-  const texture = PIXI.Texture.from(iconImage);
-  const icon = PIXI.Sprite.from(texture);
+  const texture = Texture.from(iconImage);
+  const icon = Sprite.from(texture);
 
   describe("combineStyles()", () => {
     it("should combine 2 styles into one.", () => {

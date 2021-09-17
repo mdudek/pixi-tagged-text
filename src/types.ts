@@ -1,4 +1,7 @@
-import * as PIXI from "pixi.js";
+import { BaseTexture, Texture } from "@pixi/core";
+import { Rectangle as PixiRectangle } from "@pixi/math";
+import { Sprite } from "@pixi/sprite";
+import { TextStyle as PixiTextStyle } from "@pixi/text";
 import { complement, flatEvery } from "./functionalUtils";
 
 ///// GENERAL PURPOSE
@@ -12,6 +15,12 @@ export type Rectangle = Point & {
   height: number;
 };
 
+export interface IFontMetrics {
+  ascent: number;
+  descent: number;
+  fontSize: number;
+}
+
 export type Bounds = Rectangle;
 
 export type Nested<T> = T | Array<Nested<T>>;
@@ -20,7 +29,7 @@ export type Nested<T> = T | Array<Nested<T>>;
 
 export type SpriteSource =
   | string
-  | PIXI.Texture
+  | Texture
   | HTMLCanvasElement
   | HTMLVideoElement;
 
@@ -29,20 +38,20 @@ export type TextureSource =
   | HTMLImageElement
   | HTMLCanvasElement
   | HTMLVideoElement
-  | PIXI.BaseTexture;
+  | BaseTexture;
 
-export type ImageSource = PIXI.Sprite | SpriteSource | TextureSource;
+export type ImageSource = Sprite | SpriteSource | TextureSource;
 
 export const isSpriteSource = (s: ImageSource): s is SpriteSource =>
   typeof s === "string" ||
-  s instanceof PIXI.Texture ||
+  s instanceof Texture ||
   s instanceof HTMLCanvasElement ||
   s instanceof HTMLVideoElement;
 export const isTextureSource = (s: ImageSource): s is TextureSource =>
-  s instanceof HTMLImageElement || s instanceof PIXI.BaseTexture;
+  s instanceof HTMLImageElement || s instanceof BaseTexture;
 
 export type ImageSourceMap = Record<string, ImageSource>;
-export type ImageMap = Record<string, PIXI.Sprite>;
+export type ImageMap = Record<string, Sprite>;
 
 export type SplitStyle = "words" | "characters";
 export interface TaggedTextOptions {
@@ -83,7 +92,7 @@ export type TextDecoration =
 
 export interface TextStyle
   extends Record<string, unknown>,
-    Partial<PIXI.TextStyle> {
+    Partial<PixiTextStyle> {
   align?: Align;
   fontStyle?: FontStyle;
 }
@@ -160,7 +169,7 @@ export type TagStack = TagMatchData[];
 export type NewlineToken = "\n";
 export type WhitespaceToken = " " | "\t" | NewlineToken;
 export type TextToken = string;
-export type SpriteToken = PIXI.Sprite;
+export type SpriteToken = Sprite;
 
 export interface CompositeToken<T extends Token = Token> {
   children: T[];
@@ -185,7 +194,7 @@ export type StyledTokens = StyledToken;
 export interface FinalToken {
   content: TextToken | SpriteToken;
   bounds: Rectangle;
-  fontProperties: PIXI.IFontMetrics;
+  fontProperties: IFontMetrics;
   style: TextStyleExtended;
   tags: string;
   textDecorations?: TextDecorationMetrics[];
@@ -193,7 +202,7 @@ export interface FinalToken {
 
 export const createEmptyFinalToken = (): FinalToken => ({
   content: "",
-  bounds: new PIXI.Rectangle(),
+  bounds: new PixiRectangle(),
   fontProperties: { ascent: 0, descent: 0, fontSize: 0 },
   style: {},
   tags: "",
@@ -225,7 +234,7 @@ export const isNewline = (s: string): s is NewlineToken =>
   isWhitespace(s) && s === "\n";
 
 export const _isSpriteToken = (t: FinalToken): t is SpriteFinalToken =>
-  t.content instanceof PIXI.Sprite;
+  t.content instanceof Sprite;
 export const isSpriteToken = flatEvery(_isSpriteToken);
 
 export const _isTextToken = (t: FinalToken): t is TextFinalToken =>
