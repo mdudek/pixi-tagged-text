@@ -1,0 +1,12 @@
+import { AttributesList, TagWithAttributes, TextStyleExtended, TextStyleSet, ImageMap, TagTokens, StyledTokens, Bounds, TextDecorationMetrics, IFontMetrics } from "./types";
+export declare const DEFAULT_STYLE: TextStyleExtended;
+export declare const combineStyles: (a: TextStyleExtended, b: TextStyleExtended) => TextStyleExtended;
+export declare const combineAllStyles: (styles: (TextStyleExtended | undefined)[]) => TextStyleExtended;
+export declare const convertAttributeValues: (attributes: AttributesList) => AttributesList;
+export declare const injectAttributes: (attributes?: AttributesList, style?: TextStyleExtended) => TextStyleExtended | undefined;
+export declare const getStyleForTag: (tagName: string, tagStyles: TextStyleSet, attributes?: AttributesList) => TextStyleExtended | undefined;
+export declare const tagWithAttributesToStyle: ({ tagName, attributes }: TagWithAttributes, tagStyles: TextStyleSet) => TextStyleExtended;
+export declare const getStyleForTags: (tags: TagWithAttributes[], tagStyles: TextStyleSet, styleCache: TextStyleSet) => TextStyleExtended;
+export declare const mapTagsToStyles: (tokens: TagTokens, styles: TextStyleSet, spriteTemplates?: ImageMap | undefined) => StyledTokens;
+export declare const convertDecorationToLineProps: (style: TextStyleExtended) => TextStyleExtended;
+export declare const extractDecorations: (style: TextStyleExtended, textBounds: Bounds, fontProperties: IFontMetrics) => TextDecorationMetrics[];

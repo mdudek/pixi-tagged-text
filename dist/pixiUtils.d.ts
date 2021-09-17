@@ -1,0 +1,11 @@
+import { Container, DisplayObject } from "@pixi/display";
+import { Sprite } from "@pixi/sprite";
+import { Text } from "@pixi/text";
+import { IFontMetrics } from "./types";
+export declare const measureFont: (context: CanvasRenderingContext2D) => IFontMetrics;
+export declare const INITIAL_FONT_PROPS: IFontMetrics;
+export declare const getFontPropertiesOfText: (textField: Text, forceUpdate?: boolean) => IFontMetrics;
+export declare const checkPixiVersion: (version: string, expectedMajorVersion: number) => number;
+export declare const addChildrenToContainer: (children: DisplayObject[], container: Container) => void;
+export declare const cloneSprite: (sprite: Sprite) => Sprite;
+export declare const fontSizeStringToNumber: (size: string) => number;
