@@ -91,8 +91,8 @@ export const getStyleForTag = (
   tagStyles: TextStyleSet,
   attributes: AttributesList = {}
 ): TextStyleExtended | undefined => {
-  const style = injectAttributes(attributes, tagStyles[tagName]);
-  if (style == {}) return undefined;
+  const style = injectAttributes(attributes, tagStyles[tagName]) ?? {};
+  if (Object.values(style).length === 0) return undefined;
   return style;
 };
 

@@ -1,4 +1,4 @@
-import getEmojiRegex from "emoji-regex/es2015/RGI_Emoji";
+import getEmojiRegex from "emoji-regex";
 
 import { last } from "./functionalUtils";
 import {

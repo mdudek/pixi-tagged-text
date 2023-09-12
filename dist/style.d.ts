@@ -7,6 +7,6 @@ export declare const injectAttributes: (attributes?: AttributesList, style?: Tex
 export declare const getStyleForTag: (tagName: string, tagStyles: TextStyleSet, attributes?: AttributesList) => TextStyleExtended | undefined;
 export declare const tagWithAttributesToStyle: ({ tagName, attributes }: TagWithAttributes, tagStyles: TextStyleSet) => TextStyleExtended;
 export declare const getStyleForTags: (tags: TagWithAttributes[], tagStyles: TextStyleSet, styleCache: TextStyleSet) => TextStyleExtended;
-export declare const mapTagsToStyles: (tokens: TagTokens, styles: TextStyleSet, spriteTemplates?: ImageMap | undefined) => StyledTokens;
+export declare const mapTagsToStyles: (tokens: TagTokens, styles: TextStyleSet, spriteTemplates?: ImageMap) => StyledTokens;
 export declare const convertDecorationToLineProps: (style: TextStyleExtended) => TextStyleExtended;
 export declare const extractDecorations: (style: TextStyleExtended, textBounds: Bounds, fontProperties: IFontMetrics) => TextDecorationMetrics[];

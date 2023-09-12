@@ -11,4 +11,4 @@ export declare const removeTags: (input: string) => string;
 export declare const tagMatchToTagToken: (tag: TagMatchData) => TagToken;
 export declare const createTokensNew: (segments: string[], tags: TagMatchData[]) => (TagToken | TextToken)[];
 export declare const containsEmoji: (input: string) => boolean;
-export declare const parseTagsNew: (input: string, tagNamesToMatch?: string[] | undefined, shouldWrapEmoji?: boolean | undefined) => CompositeToken<TagToken | TextToken>;
+export declare const parseTagsNew: (input: string, tagNamesToMatch?: string[], shouldWrapEmoji?: boolean) => CompositeToken<TagToken | TextToken>;

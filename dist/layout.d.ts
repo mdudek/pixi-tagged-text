@@ -14,7 +14,7 @@ export declare const alignRight: (maxWidth: number) => (line: Bounds[]) => Bound
 export declare const alignCenter: (maxWidth: number) => (line: Bounds[]) => Bounds[];
 export declare const alignJustify: (maxLineWidth: number) => (line: Bounds[]) => Bounds[];
 export declare const alignLines: (align: Align, maxWidth: number, lines: ParagraphToken) => ParagraphToken;
-export declare const verticalAlignInLines: (lines: ParagraphToken, lineSpacing: number, overrideValign?: VAlign | undefined) => ParagraphToken;
+export declare const verticalAlignInLines: (lines: ParagraphToken, lineSpacing: number, overrideValign?: VAlign) => ParagraphToken;
 export declare const collapseWhitespacesOnEndOfLines: (lines: ParagraphToken) => ParagraphToken;
 export declare const splitAroundWhitespace: (s: string) => string[];
 export declare const splitText: (s: string, splitStyle: SplitStyle) => string[];
